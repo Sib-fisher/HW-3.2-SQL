@@ -1,14 +1,16 @@
 package ru.netology.page;
 
+import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.SelenideElement;
-import static com.codeborne.selenide.Condition.text;
-import static com.codeborne.selenide.Condition.visible;
+import static com.codeborne.selenide.Selenide.$$;
+
 import static com.codeborne.selenide.Selenide.$;
 
+
 public class LoginPage {
-    private final SelenideElement loginField = $("[name='login']");
-    private final SelenideElement passwordField = $("[name='password']");
-    private final SelenideElement loginButton = $("[data-test-id='action-login']");
+    private final SelenideElement loginField = $("input[name='login']");
+    private final SelenideElement passwordField = $("input[name='password']");
+    private final SelenideElement loginButton = $$("*").findBy(Condition.text("Продолжить"));
     private final SelenideElement errorNotification = $("[data-test-id='error-notification']");
 
     public VerificationPage validLogin(String login, String password) {
@@ -22,11 +24,14 @@ public class LoginPage {
     }
 
     public void verifyError(String expectedText) {
-        errorNotification.shouldBe(visible).shouldHave(text(expectedText));
+        errorNotification.shouldBe(Condition.visible).shouldHave(Condition.text(expectedText));
     }
 
+    // DRY: вынесли повторяющийся код в отдельный метод + добавили очистку
     private void fillAndSubmit(String login, String password) {
+        loginField.shouldBe(Condition.visible).clear();
         loginField.setValue(login);
+        passwordField.shouldBe(Condition.visible).clear();
         passwordField.setValue(password);
         loginButton.click();
     }

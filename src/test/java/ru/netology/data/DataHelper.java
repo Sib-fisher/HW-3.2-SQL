@@ -10,4 +10,9 @@ public class DataHelper {
     public static String getPassword() {
         return "qwerty123";
     }
+
+    // Генерация случайного пароля для теста блокировки
+    public static String getRandomPassword() {
+        return "wrongPass" + System.currentTimeMillis();
+    }
 }

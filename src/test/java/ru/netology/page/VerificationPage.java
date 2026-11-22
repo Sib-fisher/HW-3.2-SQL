@@ -1,8 +1,8 @@
 package ru.netology.page;
 
+import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.SelenideElement;
-import static com.codeborne.selenide.Condition.text;
-import static com.codeborne.selenide.Condition.visible;
+
 import static com.codeborne.selenide.Selenide.$;
 
 public class VerificationPage {
@@ -11,18 +11,20 @@ public class VerificationPage {
     private final SelenideElement errorNotification = $("[data-test-id='error-notification']");
 
     public DashboardPage validVerify(String code) {
+        codeField.shouldBe(Condition.visible).clear();
         codeField.setValue(code);
         verifyButton.click();
         return new DashboardPage();
     }
 
     public VerificationPage invalidVerify(String wrongCode) {
+        codeField.shouldBe(Condition.visible).clear();
         codeField.setValue(wrongCode);
         verifyButton.click();
         return this;
     }
 
     public void verifyError(String expectedText) {
-        errorNotification.shouldBe(visible).shouldHave(text(expectedText));
+        errorNotification.shouldBe(Condition.visible).shouldHave(Condition.text(expectedText));
     }
 }

@@ -29,7 +29,8 @@ public class LoginTest {
         var loginPage = new LoginPage();
 
         for (int i = 0; i < 3; i++) {
-            loginPage = loginPage.invalidLogin(DataHelper.getLogin(), "wrongPass");
+            // Используем случайный пароль вместо хардкода
+            loginPage = loginPage.invalidLogin(DataHelper.getLogin(), DataHelper.getRandomPassword());
             loginPage.verifyError("Неверно указан логин или пароль");
         }
 

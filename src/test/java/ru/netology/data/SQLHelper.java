@@ -47,9 +47,7 @@ public class SQLHelper {
             runner.update(conn, "SET FOREIGN_KEY_CHECKS = 0");
             runner.update(conn, "TRUNCATE TABLE auth_codes");
             runner.update(conn, "TRUNCATE TABLE cards");
-
             runner.update(conn, "UPDATE users SET status = 'active'");
-
             runner.update(conn, "SET FOREIGN_KEY_CHECKS = 1");
         } catch (SQLException e) {
             throw new RuntimeException("Ошибка очистки БД", e);
